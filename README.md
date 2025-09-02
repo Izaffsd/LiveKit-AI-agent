@@ -8,7 +8,6 @@
 
 * Real-time AI conversations using Google’s Realtime LLM
 * Noise cancellation via **LiveKit BVC plugin**
-* Video and audio room support with **RoomInputOptions**
 * Customizable agent instructions (`prompts.py`)
 * Secure environment variable handling using **dotenv**
 * Easy-to-run CLI commands: `download-files`, `console`, `dev`
@@ -39,7 +38,7 @@ Create and activate a virtual environment:
 
 ```bash
 python -m venv venv
-.env\Scriptsctivate
+.\env\Scripts\activate
 ```
 
 Upgrade pip and install requirements:
@@ -76,47 +75,6 @@ GMAIL_USER=your_gmail_address
 python agent.py download-files   # Download required assets
 python agent.py console          # Start interactive console mode
 python .\agent.py dev           # Run in development mode
-```
-
----
-
-## Code Overview
-
-The main agent is implemented in `agent.py`:
-
-```python
-from dotenv import load_dotenv
-from livekit import agents
-from livekit.agents import AgentSession, Agent, RoomInputOptions
-from livekit.plugins import noise_cancellation, google
-from prompts import AGENT_INSTRUCTION, SESSION_INSTRUCTION
-
-load_dotenv()
-
-class Assistant(Agent):
-    def __init__(self):
-        super().__init__(
-            instructions=AGENT_INSTRUCTION,
-            llm=google.beta.realtime.RealtimeModel(
-                voice="Aoede",
-                temperature=0.8,
-            )
-        )
-
-async def entrypoint(ctx: agents.JobContext):
-    session = AgentSession()
-    await session.start(
-        room=ctx.room,
-        agent=Assistant(),
-        room_input_options=RoomInputOptions(
-            video_enabled=True,
-            noise_cancellation=noise_cancellation.BVC(),
-        ),
-    )
-    await session.generate_reply(instructions=SESSION_INSTRUCTION)
-
-if __name__ == "__main__":
-    agents.cli.run_app(agents.WorkerOptions(entrypoint_fnc=entrypoint))
 ```
 
 ---
