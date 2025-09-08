@@ -62,11 +62,6 @@ GOOGLE_API_KEY=your_google_api_key
 GMAIL_APP_PASSWORD=your_gmail_app_password
 GMAIL_USER=your_gmail_address
 ```
-
-* Get LiveKit Keys
-* Get Google API Key
-* Generate Gmail App Password
-
 ---
 
 ## Available Scripts
@@ -74,11 +69,5 @@ GMAIL_USER=your_gmail_address
 ```bash
 python agent.py download-files   # Download required assets
 python agent.py console          # Start interactive console mode
-python .\agent.py dev           # Run in development mode
+python agent.py dev           # Run in development mode
 ```
-
----
-
-## Demo
-
-Try the **LiveKit Playground** to explore agent capabilities.
